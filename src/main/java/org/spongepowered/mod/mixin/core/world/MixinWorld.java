@@ -83,5 +83,4 @@ public abstract class MixinWorld implements org.spongepowered.api.world.World {
     public long getRunningDuration() {
         return this.worldInfo.getWorldTotalTime() - this.weatherStartTime;
     }
-
 }

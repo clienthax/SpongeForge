@@ -45,6 +45,7 @@ import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.common.entity.SpongeEntityType;
+import org.spongepowered.api.world.biome.BiomeGenerationSettingsBuilder;
 import org.spongepowered.common.registry.RegistryHelper;
 import org.spongepowered.common.registry.SpongeGameRegistry;
 import org.spongepowered.mod.SpongeMod;
