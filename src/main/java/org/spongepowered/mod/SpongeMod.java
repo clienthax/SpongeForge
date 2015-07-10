@@ -29,7 +29,9 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -73,6 +75,7 @@ import org.spongepowered.common.service.persistence.SpongeSerializationService;
 import org.spongepowered.common.service.scheduler.SpongeScheduler;
 import org.spongepowered.common.service.sql.SqlServiceImpl;
 import org.spongepowered.common.util.SpongeHooks;
+import org.spongepowered.common.world.PlayerSimulatorFactory;
 import org.spongepowered.mod.event.SpongeEventHooks;
 import org.spongepowered.mod.guice.SpongeGuiceModule;
 import org.spongepowered.mod.plugin.SpongeModPluginContainer;
@@ -179,6 +182,14 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
         } catch (Throwable t) {
             this.controller.errorOccurred(this, t);
         }
+
+        PlayerSimulatorFactory.instance = new PlayerSimulatorFactory() {
+
+            @Override
+            protected EntityPlayerMP createPlayer(WorldServer world) {
+                return new SpongeFakePlayer(world);
+            }
+        };
     }
 
     @SubscribeEvent
