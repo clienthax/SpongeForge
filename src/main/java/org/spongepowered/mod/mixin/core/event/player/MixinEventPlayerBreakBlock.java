@@ -28,9 +28,13 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.world.BlockEvent;
 import org.spongepowered.api.block.BlockTransaction;
 import org.spongepowered.api.block.BlockTypes;
+import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.event.Event;
+import org.spongepowered.api.event.SpongeEventFactory;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
@@ -51,11 +55,12 @@ public abstract class MixinEventPlayerBreakBlock extends MixinEventBlock impleme
     @Shadow private int exp;
     @Shadow private EntityPlayer player;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>", at = @At("RETURN") )
     public void onConstructed(net.minecraft.world.World world, BlockPos pos, IBlockState state, EntityPlayer player, CallbackInfo ci) {
         this.blockOriginal = ((World) world).createSnapshot(pos.getX(), pos.getY(), pos.getZ());
         this.blockReplacement = BlockTypes.AIR.getDefaultState().snapshotFor(new Location<World>((World) world, VecHelper.toVector(pos)));
-        this.blockTransactions = new ImmutableList.Builder<BlockTransaction>().add(new BlockTransaction(this.blockOriginal, this.blockReplacement)).build();
+        this.blockTransactions =
+                new ImmutableList.Builder<BlockTransaction>().add(new BlockTransaction(this.blockOriginal, this.blockReplacement)).build();
     }
 
     @Override
@@ -63,4 +68,12 @@ public abstract class MixinEventPlayerBreakBlock extends MixinEventBlock impleme
         return Cause.of(this.player);
     }
 
+    @Override
+    public Event createSpongeEvent() {
+        Cause cause = getCause();
+        if (this.player instanceof FakePlayer) {
+            cause = Cause.of(cause.noneOf(Entity.class));
+        }
+        return SpongeEventFactory.createChangeBlockEventBreak(getGame(), cause, getTargetWorld(), this.blockTransactions);
+    }
 }
