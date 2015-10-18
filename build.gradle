@@ -39,6 +39,17 @@ compileJava {
 	sourceCompatibility = '1.8'
 }
 
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			repository(url: chRepo) {
+				authentication(userName: chUsername, password: chPassword)
+			}
+		}
+	}
+}
+
 jar {
     exclude 'log4j2.xml' // log4j2 configuration is for the development workspace only
 
