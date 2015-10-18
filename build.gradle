@@ -43,11 +43,11 @@ compileJava {
 uploadArchives {
 	repositories {
 		mavenDeployer {
-			repository(url: chRepo) {
-				authentication(userName: chUsername, password: chPassword)
+			repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
+				authentication(userName: spongeUsername_1258423148, password: spongeMavenPassword_1258423148 )
 			}
 		}
-	}
+		}
 }
 
 jar {
