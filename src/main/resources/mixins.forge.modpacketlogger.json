@@ -1,0 +1,15 @@
+{
+  "minVersion": "0.7.10",
+  "package": "org.spongepowered.mod.mixin.modpacketlogger",
+  "refmap": "mixins.forge.refmap.json",
+  "plugin": "org.spongepowered.mod.mixin.plugin.modpacketlogger.ModPacketLoggerPlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+      "FMLEventChannelMixin_ModPacketLogger",
+    "SimpleNetworkWrapperMixin_ModPacketLogger"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -98,6 +98,7 @@ public class SpongeCoremod implements IFMLLoadingPlugin {
         Mixins.addConfiguration("mixins.forge.api.json");
         Mixins.addConfiguration("mixins.forge.core.json");
         Mixins.addConfiguration("mixins.forge.brokenmods.json");
+        Mixins.addConfiguration("mixins.forge.modpacketlogger.json");
         Mixins.addConfiguration("mixins.forge.bungeecord.json");
         Mixins.addConfiguration("mixins.forge.entityactivation.json");
         Mixins.addConfiguration("mixins.forge.optimization.json");
